@@ -5,10 +5,29 @@
   --card-text: #0b1120;
   --accent: #6366f1;
   --accent-light: #a5b4fc;
+  --accent-link: #a5b4fc;
+  --card-accent: #4338ca;
   --text: #e5e9f5;
   --text-dim: #9ca7c4;
   --border: #22304f;
   --max-width: 1080px;
+
+  --font-heading: 'Sora', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+  --fs-xs: 0.75rem;
+  --fs-sm: 0.875rem;
+  --fs-base: 1rem;
+  --fs-md: 1.125rem;
+  --fs-lg: 1.25rem;
+  --fs-xl: 1.875rem;
+  --fs-2xl: clamp(2.25rem, 5vw, 3.25rem);
+
+  --space-1: 8px;
+  --space-2: 16px;
+  --space-3: 24px;
+  --space-4: 40px;
+  --space-5: 64px;
+  --space-6: 96px;
 }
 
 * {
@@ -34,38 +53,47 @@ body {
 }
 
 a {
-  color: var(--accent-light);
+  color: var(--accent-link);
 }
 
 h1, h2, h3 {
+  font-family: var(--font-heading);
   line-height: 1.2;
   color: #ffffff;
 }
 
 /* Hero */
 .hero {
+  position: relative;
+  overflow: hidden;
   background: linear-gradient(160deg, var(--bg) 0%, var(--bg-alt) 100%);
-  padding: 80px 0 56px;
+  padding: var(--space-6) 0 var(--space-5);
   border-bottom: 1px solid var(--border);
 }
 
 .eyebrow {
+  font-family: var(--font-heading);
   text-transform: uppercase;
   letter-spacing: 0.12em;
-  font-size: 0.8rem;
-  color: var(--accent-light);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  color: var(--accent-link);
   margin: 0 0 8px;
 }
 
 .hero h1 {
-  font-size: clamp(2rem, 5vw, 3rem);
+  font-size: var(--fs-2xl);
   margin: 0 0 8px;
+  background: linear-gradient(120deg, var(--text) 30%, var(--accent-link) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 .subtitle {
   color: var(--text-dim);
-  margin: 0 0 24px;
-  font-size: 1.1rem;
+  margin: 0 0 var(--space-3);
+  font-size: var(--fs-md);
 }
 
 .mantra {
@@ -89,12 +117,14 @@ h1, h2, h3 {
 }
 
 .tag {
+  font-family: var(--font-heading);
   background: rgba(99, 102, 241, 0.15);
   border: 1px solid rgba(99, 102, 241, 0.4);
-  color: var(--accent-light);
+  color: var(--accent-link);
   padding: 6px 14px;
   border-radius: 999px;
-  font-size: 0.85rem;
+  font-size: var(--fs-sm);
+  font-weight: 600;
 }
 
 .hero-nav {
@@ -104,21 +134,77 @@ h1, h2, h3 {
 }
 
 .hero-nav a {
+  position: relative;
   color: var(--text);
   text-decoration: none;
   font-weight: 600;
-  border-bottom: 2px solid transparent;
   padding-bottom: 4px;
-  transition: border-color 0.2s ease;
 }
 
-.hero-nav a:hover {
-  border-color: var(--accent);
+.hero-nav a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.25s ease;
+}
+
+.hero-nav a:hover::after {
+  transform: scaleX(1);
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  top: -20%;
+  left: 50%;
+  width: 720px;
+  height: 720px;
+  transform: translateX(-50%);
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.35) 0%, rgba(99, 102, 241, 0) 70%);
+  filter: blur(40px);
+  pointer-events: none;
+}
+
+.hero-inner {
+  position: relative;
+  z-index: 1;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes fade-in-up {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .hero-inner > * {
+    opacity: 0;
+    animation: fade-in-up 0.6s ease forwards;
+  }
+
+  .hero-inner > *:nth-child(1) { animation-delay: 0s; }
+  .hero-inner > *:nth-child(2) { animation-delay: 0.08s; }
+  .hero-inner > *:nth-child(3) { animation-delay: 0.16s; }
+  .hero-inner > *:nth-child(4) { animation-delay: 0.24s; }
+  .hero-inner > *:nth-child(5) { animation-delay: 0.32s; }
+  .hero-inner > *:nth-child(6) { animation-delay: 0.4s; }
+  .hero-inner > *:nth-child(7) { animation-delay: 0.48s; }
 }
 
 /* About */
 .about {
-  padding: 56px 0;
+  padding: var(--space-5) 0;
   border-bottom: 1px solid var(--border);
 }
 
@@ -129,12 +215,12 @@ h1, h2, h3 {
 
 /* Projects */
 .projects {
-  padding: 56px 0 72px;
+  padding: var(--space-5) 0 var(--space-6);
 }
 
 .projects h2, .about h2, .contact h2 {
-  font-size: 1.8rem;
-  margin-bottom: 32px;
+  font-size: var(--fs-xl);
+  margin-bottom: var(--space-3);
 }
 
 .project-grid {
@@ -161,19 +247,87 @@ h1, h2, h3 {
   background: #dfe3ee;
 }
 
+@media (prefers-reduced-motion: no-preference) {
+  .project-card {
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  .project-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+  }
+
+  .project-card img {
+    transition: transform 0.35s ease;
+  }
+
+  .project-card:hover img {
+    transform: scale(1.06);
+  }
+}
+
 .project-body {
   padding: 20px 24px 24px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
 .project-card--text-only .project-body {
   padding-top: 24px;
 }
 
+.project-card__glyph {
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent-light);
+  background:
+    repeating-linear-gradient(135deg, rgba(99, 102, 241, 0.08) 0 2px, transparent 2px 14px),
+    radial-gradient(circle at 50% 40%, rgba(99, 102, 241, 0.35) 0%, rgba(11, 17, 32, 0) 70%),
+    var(--bg-alt);
+}
+
+.project-link {
+  margin-top: auto;
+  padding-top: 12px;
+  border-top: 1px solid rgba(11, 17, 32, 0.08);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--card-accent);
+  font-weight: 600;
+  font-size: var(--fs-sm);
+  text-decoration: none;
+}
+
+.project-link__arrow {
+  transition: transform 0.2s ease;
+}
+
+.project-link:hover .project-link__arrow {
+  transform: translateX(4px);
+}
+
+.project-confidential {
+  margin-top: auto;
+  padding-top: 12px;
+  border-top: 1px solid rgba(11, 17, 32, 0.08);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #4b5563;
+  font-weight: 600;
+  font-size: var(--fs-sm);
+}
+
 .project-tag {
+  font-family: var(--font-heading);
   display: inline-block;
   background: rgba(99, 102, 241, 0.12);
   color: var(--accent);
-  font-size: 0.75rem;
+  font-size: var(--fs-xs);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -184,13 +338,13 @@ h1, h2, h3 {
 
 .project-body h3 {
   margin: 0 0 10px;
-  font-size: 1.15rem;
+  font-size: var(--fs-lg);
   color: var(--card-text);
 }
 
 .project-body p {
   margin: 0 0 12px;
-  font-size: 0.95rem;
+  font-size: var(--fs-base);
 }
 
 .project-stats {
@@ -203,13 +357,13 @@ h1, h2, h3 {
 }
 
 .project-stats li {
-  font-size: 0.9rem;
+  font-size: var(--fs-sm);
   border-left: 3px solid var(--accent);
   padding-left: 10px;
 }
 
 .project-finding {
-  font-size: 0.88rem;
+  font-size: var(--fs-sm);
   font-style: italic;
   color: #4b5563;
 }
@@ -217,13 +371,13 @@ h1, h2, h3 {
 /* Contact */
 .contact {
   background: var(--bg-alt);
-  padding: 56px 0 72px;
+  padding: var(--space-5) 0 var(--space-6);
   border-top: 1px solid var(--border);
 }
 
 .contact-sub {
   color: var(--text-dim);
-  margin-bottom: 32px;
+  margin-bottom: var(--space-3);
 }
 
 .contact-grid {
@@ -245,13 +399,23 @@ h1, h2, h3 {
   transition: border-color 0.2s ease, background 0.2s ease;
 }
 
+@media (prefers-reduced-motion: no-preference) {
+  .contact-item {
+    transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+  }
+
+  .contact-item:hover {
+    transform: translateY(-3px);
+  }
+}
+
 .contact-item:hover {
   border-color: var(--accent);
   background: rgba(99, 102, 241, 0.16);
 }
 
 .contact-label {
-  font-size: 0.75rem;
+  font-size: var(--fs-xs);
   text-transform: uppercase;
   letter-spacing: 0.05em;
   color: var(--text-dim);
@@ -277,6 +441,11 @@ h1, h2, h3 {
     --text: #111827;
     --text-dim: #4b5563;
     --border: #dbe0f0;
+    /* Darker than --accent-light so on-canvas text still meets contrast against the
+       light background. --card-bg/--card-text/--accent are intentionally left
+       unchanged: project cards stay a fixed light widget on the canvas in both
+       color schemes, so they don't need a light-mode override. */
+    --accent-link: #4338ca;
   }
 
   h1, h2, h3 {
