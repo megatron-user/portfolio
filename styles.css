@@ -90,27 +90,19 @@ h1, h2, h3 {
 
 .avatar-halo {
   flex-shrink: 0;
-  width: 128px;
-  height: 128px;
-  border-radius: 50%;
+  width: 168px;
+  height: 168px;
   overflow: hidden;
-  background: rgba(255, 255, 255, 0.10);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  box-shadow: 0 8px 32px rgba(139, 92, 246, 0.3), 0 4px 16px rgba(34, 211, 238, 0.15);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 8px;
 }
 
 .avatar {
   width: 100%;
   height: 100%;
-  border-radius: 50%;
+  border-radius: 16px;
   object-fit: cover;
+  object-position: 50% 15%;
   display: block;
+  box-shadow: 24px 0 40px rgba(139, 92, 246, 0.4);
   -webkit-user-drag: none;
   user-select: none;
   -webkit-touch-callout: none;
